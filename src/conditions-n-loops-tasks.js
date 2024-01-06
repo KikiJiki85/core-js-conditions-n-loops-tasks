@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,12 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  let result = null;
+  if (a > b && a > c) result = a;
+  else if (b > a && b > c) result = b;
+  else result = c;
+  return result;
 }
 
 /**
@@ -60,8 +64,10 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x || queen.y === king.y) return true;
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) return true;
+  return false;
 }
 
 /**
@@ -82,8 +88,8 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  return a + b > c && a + c > b && b + c > a;
 }
 
 /**
@@ -100,8 +106,16 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const decadeDic = ['X', 'XX', 'XXX'];
+  const digitDic = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+
+  if (num <= 9) return digitDic[num - 1];
+  const decade = Math.floor(num / 10);
+  const digit = num % 10;
+
+  if (digit === 0) return decadeDic[decade - 1];
+  return decadeDic[decade - 1] + digitDic[digit - 1];
 }
 
 /**
@@ -119,8 +133,50 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  let space = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '-':
+        result += 'minus';
+        break;
+      case '0':
+        result += `${space}zero`;
+        break;
+      case '1':
+        result += `${space}one`;
+        break;
+      case '2':
+        result += `${space}two`;
+        break;
+      case '3':
+        result += `${space}three`;
+        break;
+      case '4':
+        result += `${space}four`;
+        break;
+      case '5':
+        result += `${space}five`;
+        break;
+      case '6':
+        result += `${space}six`;
+        break;
+      case '7':
+        result += `${space}seven`;
+        break;
+      case '8':
+        result += `${space}eight`;
+        break;
+      case '9':
+        result += `${space}nine`;
+        break;
+      default:
+        result += `${space}point`;
+    }
+    space = ' ';
+  }
+  return result;
 }
 
 /**
@@ -135,8 +191,11 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i < str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) return false;
+  }
+  return true;
 }
 
 /**
@@ -153,8 +212,15 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let idx = -1;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      idx = i;
+      break;
+    }
+  }
+  return idx;
 }
 
 /**
@@ -172,8 +238,13 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let tmp = num;
+  while (tmp > 0) {
+    if (tmp % 10 === digit) return true;
+    tmp = Math.floor(tmp / 10);
+  }
+  return false;
 }
 
 /**
