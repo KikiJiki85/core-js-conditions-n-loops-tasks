@@ -304,8 +304,24 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const resultMatrix = [...matrix];
+  const { length } = resultMatrix;
+
+  for (let level = 0; level < Math.floor(length / 2); level += 1) {
+    const first = level;
+    const last = length - 1 - level;
+    for (let x = first; x < last; x += 1) {
+      const offset = x - first;
+      const top = resultMatrix[first][x];
+      resultMatrix[first][x] = resultMatrix[last - offset][first];
+      resultMatrix[last - offset][first] = resultMatrix[last][last - offset];
+      resultMatrix[last][last - offset] = resultMatrix[x][last];
+      resultMatrix[x][last] = top;
+    }
+  }
+
+  return resultMatrix;
 }
 
 /**
@@ -364,8 +380,44 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const numbersArr = [];
+  let tmpNumber = number;
+
+  while (tmpNumber > 0) {
+    const digit = tmpNumber % 10;
+    numbersArr.unshift(digit);
+    tmpNumber = Math.floor(tmpNumber / 10);
+  }
+
+  let a = numbersArr.length - 2;
+  while (a >= 0 && numbersArr[a] >= numbersArr[a + 1]) a -= 1;
+  if (a === -1) return number;
+
+  let b = numbersArr.length - 1;
+  while (numbersArr[b] <= numbersArr[a]) b -= 1;
+
+  const tmp1 = numbersArr[a];
+  numbersArr[a] = numbersArr[b];
+  numbersArr[b] = tmp1;
+
+  let leftPart = a + 1;
+  let rightPart = numbersArr.length - 1;
+
+  while (leftPart < rightPart) {
+    const tmp2 = numbersArr[leftPart];
+    numbersArr[leftPart] = numbersArr[rightPart];
+    numbersArr[rightPart] = tmp2;
+    leftPart += 1;
+    rightPart -= 1;
+  }
+
+  let result = 0;
+  for (let c = 0; c < numbersArr.length; c += 1) {
+    result = result * 10 + numbersArr[c];
+  }
+
+  return result;
 }
 
 module.exports = {
