@@ -260,8 +260,20 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 0; i < arr.length; i += 1) {
+    let leftSum = 0;
+    let rightSum = 0;
+
+    for (let j = 0; j < i; j += 1) {
+      leftSum += arr[j];
+    }
+    for (let k = i + 1; k < arr.length; k += 1) {
+      rightSum += arr[k];
+    }
+    if (leftSum === rightSum) return i;
+  }
+  return -1;
 }
 
 /**
@@ -338,8 +350,27 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr, low = 0, high = arr.length - 1) {
+  const tmpArr = arr;
+  if (low < high) {
+    const turn = tmpArr[high];
+    let i = low - 1;
+    for (let j = low; j <= high - 1; j += 1) {
+      if (tmpArr[j] < turn) {
+        i += 1;
+        const temp = tmpArr[i];
+        tmpArr[i] = tmpArr[j];
+        tmpArr[j] = temp;
+      }
+    }
+    const temp = tmpArr[i + 1];
+    tmpArr[i + 1] = tmpArr[high];
+    tmpArr[high] = temp;
+
+    sortByAsc(tmpArr, low, i);
+    sortByAsc(tmpArr, i + 2, high);
+  }
+  return arr;
 }
 
 /**
